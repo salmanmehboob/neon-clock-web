@@ -2,100 +2,131 @@
 
 @section('content')
     <div class="container-fluid mt-4">
-        <div class="d-flex justify-content-between mb-3">
-            <h4>Category Images</h4>
-            <a href="{{ route('category-images.create') }}" class="btn btn-primary">
-                <i class="bi bi-plus-circle"></i> Add Category Images
-            </a>
+        <div class="row g-3 align-items-center mb-4">
+            <div class="col">
+                <h1 class="h4 mb-1">Category Images</h1>
+                <p class="text-muted mb-0">Manage clock assets per category: hands, background, and preview.</p>
+            </div>
+            <div class="col-auto">
+                <a href="{{ route('category-images.create') }}" class="btn btn-primary">
+                    <i class="bi bi-plus-circle me-1"></i> Add Category Images
+                </a>
+            </div>
         </div>
 
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <table id="categoryImagesTable" class="table table-bordered table-striped datatable">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Category</th>
-                        <th>Name</th>
-                        <th>Second Image</th>
-                        <th>Minute Image</th>
-                        <th>Hour Image</th>
-                        <th>Background Image</th>
-                        <th>Preview Image</th>
-                        <th>Created At</th>
-                        <th width="120">Actions</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach($categoryImages as $index => $item)
+        <div class="card shadow-sm border-0 rounded-3">
+            <div class="card-header bg-transparent d-flex justify-content-between align-items-center">
+                <span class="fw-semibold">All Entries</span>
+            </div>
+            <div class="card-body p-4">
+                <div class="table-responsive">
+                    <table id="categoryImagesTable" class="table table-hover align-middle table-striped mb-0 datatable">
+                        <thead class="table-light">
                         <tr>
-                            <td>{{ $index + 1 }}</td>
-                            <td>{{ $item->category->name ?? 'N/A' }}</td>
-                            <td>{{ $item->name }}</td>
-
-                            <td>
-                                @if($item->second_image)
-                                    <img src="{{ asset('storage/' . $item->second_image) }}"
-                                         alt="Second"
-                                         class="img-thumbnail"
-                                         style="width: 60px; height: 60px; object-fit: cover;">
-                                @endif
-                            </td>
-
-                            <td>
-                                @if($item->minute_image)
-                                    <img src="{{ asset('storage/' . $item->minute_image) }}"
-                                         alt="Minute"
-                                         class="img-thumbnail"
-                                         style="width: 60px; height: 60px; object-fit: cover;">
-                                @endif
-                            </td>
-
-                            <td>
-                                @if($item->hour_image)
-                                    <img src="{{ asset('storage/' . $item->hour_image) }}"
-                                         alt="Hour"
-                                         class="img-thumbnail"
-                                         style="width: 60px; height: 60px; object-fit: cover;">
-                                @endif
-                            </td>
-
-                            <td>
-                                @if($item->bg_image)
-                                    <img src="{{ asset('storage/' . $item->bg_image) }}"
-                                         alt="Background"
-                                         class="img-thumbnail"
-                                         style="width: 60px; height: 60px; object-fit: cover;">
-                                @endif
-                            </td>
-
-                            <td>
-                                @if($item->preview_image)
-                                    <img src="{{ asset('storage/' . $item->preview_image) }}"
-                                         alt="Preview"
-                                         class="img-thumbnail"
-                                         style="width: 60px; height: 60px; object-fit: cover;">
-                                @endif
-                            </td>
-
-                            <td>{{ $item->created_at->format('d M, Y') }}</td>
-                            <td>
-                                <a href="{{ route('category-images.edit', $item->id) }}" class="btn btn-sm btn-warning">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
-                                <form action="{{ route('category-images.destroy', $item->id) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger"
-                                            onclick="return confirm('Delete this entry?')">
-                                        <i class="bi bi-trash"></i>
-                                    </button>
-                                </form>
-                            </td>
+                            <th style="width: 60px;">#</th>
+                            <th>Category</th>
+                            <th>Name</th>
+                            <th class="text-center" style="width: 90px;">Second</th>
+                            <th class="text-center" style="width: 90px;">Minute</th>
+                            <th class="text-center" style="width: 90px;">Hour</th>
+                            <th class="text-center" style="width: 110px;">Background</th>
+                            <th class="text-center" style="width: 110px;">Preview</th>
+                            <th class="d-none d-lg-table-cell" style="width: 160px;">Created</th>
+                            <th class="text-end" style="width: 140px;">Actions</th>
                         </tr>
-                    @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                        @forelse($categoryImages as $index => $item)
+                            <tr>
+                                <td>{{ $index + 1 }}</td>
+                                <td class="fw-medium">{{ $item->category->name ?? 'N/A' }}</td>
+                                <td>{{ $item->name }}</td>
+
+                                <td class="text-center">
+                                    @if($item->second_image)
+                                        <img src="{{ asset('storage/' . $item->second_image) }}"
+                                             alt="Second"
+                                             class="rounded object-fit-cover"
+                                             style="width:56px;height:56px;">
+                                    @else
+                                        <span class="text-muted">—</span>
+                                    @endif
+                                </td>
+
+                                <td class="text-center">
+                                    @if($item->minute_image)
+                                        <img src="{{ asset('storage/' . $item->minute_image) }}"
+                                             alt="Minute"
+                                             class="rounded object-fit-cover"
+                                             style="width:56px;height:56px;">
+                                    @else
+                                        <span class="text-muted">—</span>
+                                    @endif
+                                </td>
+
+                                <td class="text-center">
+                                    @if($item->hour_image)
+                                        <img src="{{ asset('storage/' . $item->hour_image) }}"
+                                             alt="Hour"
+                                             class="rounded object-fit-cover"
+                                             style="width:56px;height:56px;">
+                                    @else
+                                        <span class="text-muted">—</span>
+                                    @endif
+                                </td>
+
+                                <td class="text-center">
+                                    @if($item->bg_image)
+                                        <img src="{{ asset('storage/' . $item->bg_image) }}"
+                                             alt="Background"
+                                             class="rounded object-fit-cover"
+                                             style="width:72px;height:56px;">
+                                    @else
+                                        <span class="text-muted">—</span>
+                                    @endif
+                                </td>
+
+                                <td class="text-center">
+                                    @if($item->preview_image)
+                                        <img src="{{ asset('storage/' . $item->preview_image) }}"
+                                             alt="Preview"
+                                             class="rounded object-fit-cover"
+                                             style="width:72px;height:56px;">
+                                    @else
+                                        <span class="text-muted">—</span>
+                                    @endif
+                                </td>
+
+                                <td class="text-muted d-none d-lg-table-cell">{{ $item->created_at->format('d M, Y') }}</td>
+                                <td class="text-end">
+                                    <div class="btn-group" role="group">
+                                        <a href="{{ route('category-images.edit', $item->id) }}"
+                                           class="btn btn-sm btn-outline-primary" title="Edit">
+                                            <i class="bi bi-pencil"></i>
+                                        </a>
+                                        <form action="{{ route('category-images.destroy', $item->id) }}"
+                                              method="POST" class="d-inline"
+                                              onsubmit="return confirm('Delete this entry?');">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-outline-danger" title="Delete">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="10" class="text-center text-muted py-5">
+                                    <i class="bi bi-card-image fs-3 d-block mb-2"></i>
+                                    No category images yet. Create your first set.
+                                </td>
+                            </tr>
+                        @endforelse
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>

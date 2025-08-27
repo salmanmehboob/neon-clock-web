@@ -11,7 +11,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 
-Route::middleware('auth:sanctum')->group(function () {
+//Route::middleware('auth:sanctum')->group(function () {
     // Categories
     Route::get('categories', [CategoryController::class, 'index']);
     Route::get('categories/{id}', [CategoryController::class, 'show']);
@@ -23,4 +23,4 @@ Route::middleware('auth:sanctum')->group(function () {
     // Wallpapers
     Route::get('wallpapers', [WallpaperController::class, 'index']);
     Route::get('wallpapers/{id}', [WallpaperController::class, 'show']);
-});
+//});
