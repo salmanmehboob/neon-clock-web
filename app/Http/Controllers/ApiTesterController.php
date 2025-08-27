@@ -63,7 +63,9 @@ class ApiTesterController extends Controller
         $bearer   = $request->bearer_token;
 
         // build full URL
-        $host = $request->getSchemeAndHttpHost();
+//        $host = $request->getSchemeAndHttpHost();
+        $host = rtrim(env('API_URL', $request->getSchemeAndHttpHost()), '/');
+
         if (Str::startsWith($endpoint, '/')) {
             $url = $host . $endpoint;
         } elseif (Str::startsWith($endpoint, 'http')) {
@@ -72,7 +74,7 @@ class ApiTesterController extends Controller
             $url = $host . '/' . $endpoint;
         }
 
-        try {
+         try {
             $client = Http::withHeaders((array)$headers)->timeout(30);
 
             if ($bearer) {
