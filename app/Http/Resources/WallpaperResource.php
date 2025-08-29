@@ -20,7 +20,7 @@ class WallpaperResource extends JsonResource
         return [
             'id'         => $this->id,
             'title'      => $this->title,
-            'image_path' => $this->image_path,
+//            'image_path' => $this->image_path,
             'image_url'  => $this->fullUrl($this->image_path),
             'created_at' => optional($this->created_at)->toISOString(),
             'updated_at' => optional($this->updated_at)->toISOString(),

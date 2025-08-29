@@ -20,11 +20,11 @@ class CategoryImageResource extends JsonResource
         return [
             'id' => $this->id,
             // raw paths
-            'second_image'  => $this->second_image,
-            'minute_image'  => $this->minute_image,
-            'hour_image'    => $this->hour_image,
-            'bg_image'      => $this->bg_image,
-            'preview_image' => $this->preview_image,
+//            'second_image'  => $this->second_image,
+//            'minute_image'  => $this->minute_image,
+//            'hour_image'    => $this->hour_image,
+//            'bg_image'      => $this->bg_image,
+//            'preview_image' => $this->preview_image,
 
             // full URLs
             'second_image_url'  => $this->fullUrl($this->second_image),
@@ -32,9 +32,9 @@ class CategoryImageResource extends JsonResource
             'hour_image_url'    => $this->fullUrl($this->hour_image),
             'bg_image_url'      => $this->fullUrl($this->bg_image),
             'preview_image_url' => $this->fullUrl($this->preview_image),
-
-            'created_at' => optional($this->created_at)->toISOString(),
-            'updated_at' => optional($this->updated_at)->toISOString(),
+//
+//            'created_at' => optional($this->created_at)->toISOString(),
+//            'updated_at' => optional($this->updated_at)->toISOString(),
         ];
     }
 }
