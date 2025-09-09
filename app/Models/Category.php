@@ -17,19 +17,27 @@ class Category extends Model
     {
         parent::boot();
 
-        static::creating(static function ($category) {
-            if (empty($category->slug)) {
-                $category->slug = Str::slug($category->name);
-            }
+        static::saving(static function ($category) {
+            // Always regenerate slug from name
+            $category->slug = lcfirst(str_replace(' ', '', ucwords($category->name)));
         });
-
-        static::updating(static function ($category) {
-            if ($category->isDirty('name')) {
-                $category->slug = Str::slug($category->name);
-            }
-        });
+        
+//        static::creating(static function ($category) {
+//            if (empty($category->slug)) {
+//                $slug = lcfirst(str_replace(' ', '', ucwords($category->name)));
+//                $category->slug = $slug;
+//            }
+//        });
+//
+//        static::updating(static function ($category) {
+//            if ($category->isDirty('name')) {
+//                $slug = lcfirst(str_replace(' ', '', ucwords($category->name)));
+//                $category->slug = $slug;
+//            }
+//        });
     }
-    
+
+
     public function images(): HasMany
     {
         return $this->hasMany(CategoryImage::class);

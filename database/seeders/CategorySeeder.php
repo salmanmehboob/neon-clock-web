@@ -14,17 +14,21 @@ class CategorySeeder extends Seeder
     public function run(): void
     {
         $categories = [
+            'Analog Clock',
+            'Digital Clock',
+            'DP Clock',
             'Neon Clock',
             'Stars Clock',
             'Emoji Clock',
-            'Analog Clock',
-            'Image Clock',
         ];
 
         foreach ($categories as $cat) {
+            $slug = lcfirst(str_replace(' ', '', ucwords($cat)));
+            // Example: "Analog Clock" -> "AnalogClock" -> "analogClock"
+
             Category::updateOrCreate(
                 ['name' => $cat],
-                ['slug' => \Str::slug($cat)] // if you have slug column
+                ['slug' => $slug]
             );
         }
     }

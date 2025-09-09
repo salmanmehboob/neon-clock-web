@@ -77,4 +77,40 @@ class CategoryImageController extends Controller
             ], 500);
         }
     }
+
+    public function getImagesByCategory($slug)
+    {
+        try {
+            $images = CategoryImage::whereHas('category', function ($query) use ($slug) {
+                $query->where('slug', $slug);
+            })
+                ->with('category:id,name,slug')
+                ->latest()
+                ->get();
+
+            if ($images->isEmpty()) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'No images found for this category.',
+                    'count' => 0,
+                    'data' => [],
+                ], 404);
+            }
+
+            return response()->json([
+                'status' => true,
+                'message' => 'Images fetched successfully for category: ' . $slug,
+                'count' => $images->count(),
+                'data' => CategoryImageResource::collection($images),
+            ]);
+        } catch (Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Failed to fetch images.',
+                'error' => $e->getMessage(),
+            ], 500);
+        }
+    }
+
+
 }

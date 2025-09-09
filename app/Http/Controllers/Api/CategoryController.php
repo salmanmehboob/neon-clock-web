@@ -16,8 +16,7 @@ class CategoryController extends Controller
         try {
             $perPage = (int) $request->query('per_page', 15);
 
-            $categories = Category::with('images')
-                ->withCount('images')
+            $categories = Category::select('id', 'name', 'slug as folderName')
                 ->latest()
                 ->paginate($perPage);
 
@@ -33,16 +32,7 @@ class CategoryController extends Controller
             return response()->json([
                 'status' => true,
                 'message' => 'Categories fetched successfully.',
-                'count' => $categories->count(),
-                'total' => $categories->total(),
-                'meta' => [
-                    'current_page' => $categories->currentPage(),
-                    'per_page' => $categories->perPage(),
-                    'last_page' => $categories->lastPage(),
-                    'from' => $categories->firstItem(),
-                    'to' => $categories->lastItem(),
-                ],
-                'data' => CategoryResource::collection($categories->items()),
+                'data' => $categories->items(), // no need for resource if simple
             ]);
         } catch (Exception $e) {
             return response()->json([
@@ -56,15 +46,13 @@ class CategoryController extends Controller
     public function show($id)
     {
         try {
-            $category = Category::with('images')
-                ->withCount('images')
-                ->findOrFail($id);
+            $category = Category::select('id', 'name', 'slug')->findOrFail($id);
 
             return response()->json([
                 'status' => true,
                 'message' => 'Category fetched successfully.',
                 'count' => 1,
-                'data' => new CategoryResource($category),
+                'data' => $category,
             ]);
         } catch (ModelNotFoundException $e) {
             return response()->json([
@@ -80,4 +68,5 @@ class CategoryController extends Controller
             ], 500);
         }
     }
+
 }

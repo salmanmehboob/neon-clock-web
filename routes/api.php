@@ -12,15 +12,16 @@ Route::get('/user', function (Request $request) {
 
 
 //Route::middleware('auth:sanctum')->group(function () {
-    // Categories
-    Route::get('categories', [CategoryController::class, 'index']);
-    Route::get('categories/{id}', [CategoryController::class, 'show']);
+// Categories
+Route::get('categories', [CategoryController::class, 'index']);
+Route::get('categories/{id}', [CategoryController::class, 'show']);
 
-    // Category Images
-    Route::get('category-images', [CategoryImageController::class, 'index']);
-    Route::get('category-images/{id}', [CategoryImageController::class, 'show']);
+// Category Images
+Route::get('category-images', [CategoryImageController::class, 'index']);
+Route::get('category-images/{slug}', [CategoryImageController::class, 'show']);
+Route::get('categories/{slug}/images', [CategoryImageController::class, 'getImagesByCategory']);
 
-    // Wallpapers
-    Route::get('wallpapers', [WallpaperController::class, 'index']);
-    Route::get('wallpapers/{id}', [WallpaperController::class, 'show']);
+// Wallpapers
+Route::get('wallpapers', [WallpaperController::class, 'index']);
+Route::get('wallpapers/{id}', [WallpaperController::class, 'show']);
 //});

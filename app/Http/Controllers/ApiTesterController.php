@@ -17,6 +17,7 @@ class ApiTesterController extends Controller
             ['title' => 'List categories', 'method' => 'GET', 'endpoint' => '/api/categories'],
             ['title' => 'Get category', 'method' => 'GET', 'endpoint' => '/api/categories/{id}'],
             ['title' => 'List category images', 'method' => 'GET', 'endpoint' => '/api/category-images'],
+            ['title' => 'Get Images By Category', 'method' => 'GET', 'endpoint' => 'api/categories/{slug}/images'],
             ['title' => 'List wallpaper', 'method' => 'GET', 'endpoint' => '/api/wallpapers'],
             ['title' => 'Get wallpaper', 'method' => 'GET', 'endpoint' => '/api/wallpapers/{id}'],
             // add more examples as you wish
